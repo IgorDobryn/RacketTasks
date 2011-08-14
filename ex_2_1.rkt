@@ -32,3 +32,5 @@
 (define x2 (make-rat 1 3))
 
 (print-rat (mul-rat x1 x2))
+
+x1
