@@ -42,7 +42,7 @@
                                                )
                                        )
                          )
-                         (+ (quotient n 4) 1)
+                         (+ (remainder n 4) 1)
                 )                 
                 1.0)
 )
