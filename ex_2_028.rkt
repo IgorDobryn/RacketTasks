@@ -1,20 +1,20 @@
 (define (fringe l)
+  (define (end-of-list list)
+    (if (null? (cdr list))
+         null
+         (fringe-recursive (cdr list))))
 
-  (define (fringe-recursive items res)
+  (define (fringe-recursive items)
     (if (pair? (car items))
-        (fringe-recursive (car items) res)
-        (if (null? (cdr items))
-             (cons res (car items))
-             (fringe-recursive (cdr items)
-                               (cons res
-                                     (car items))))))
+            (append (fringe-recursive (car items))
+                    (end-of-list items))
+            (append (list (car items))
+                    (end-of-list items))))
 
-  (fringe-recursive l (list)))
+  (fringe-recursive l))
 
+(define x (list 1 2 3 4))
 
-(define x (list (list 1 2) (list 3 4)))
+(fringe x)
 
-(fringe (list 1 2 3 4))
-
-(cons 1 (car (list 2 3)))
-
+(fringe (list x x))
