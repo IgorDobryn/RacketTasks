@@ -1,24 +1,15 @@
-(define (get_Paskal_triangle_value row column)
-  (cond (
-         (and (= row 0) (= column 0)) 1
-                                      )
-        (else (get_parent row column)        
-              )
-        )
-  )
-(define (get_parent row column)
-  (cond (
-         (or (= row 0) (= column 0)) 
-         1
-         )
-        (else
-         (+
-          (get_parent (- row 1) column)
-          (get_parent row (- column 1))
-          )
-         )  
-        )
-  )
+(define (get-Paskal-triangle-value row column)
+  (cond ((and (= row 0)
+              (= column 0))
+          1)
+        (else (get-parent row column))))
+
+(define (get-parent row column)
+  (cond ((or (= row 0)
+             (= column 0))
+          1)
+        (else (+ (get-parent (- row 1) column)
+                 (get-parent row (- column 1))))))
 
 
-(get_Paskal_triangle_value 3 2)
+(get-Paskal-triangle-value 3 2)
