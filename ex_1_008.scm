@@ -1,10 +1,16 @@
-(define (sqrt-iter guess x)
-  (if (good-enough? guess (improve guess x))
-      guess
-      (sqrt-iter (improve guess x)
-                 x)))
+(require rackunit)
 
-(define (improve guess x)
+(define tolerance 0.00000001)
+
+(define (sqrt-iter guess x)
+ (define (improve-iter prev-guess cur-guess)
+    (if (good-enough? prev-guess cur-guess)
+        cur-guess
+        (improve-iter cur-guess
+                 (improve-guess cur-guess x))))
+  (improve-iter guess (improve-guess guess x)))
+
+(define (improve-guess guess x)
   (/ (+ (/ x (* guess guess))
         (* 2 guess))
    3))
@@ -15,4 +21,6 @@
 (define (cube-root x)
   (sqrt-iter 1.0 x))
 
-(cube-root 27)
+(check-= (cube-root 27) 3 tolerance)
+(check-= (cube-root 970299) 99 tolerance)
+(check-= (cube-root -148877) -53 tolerance)
