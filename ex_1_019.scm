@@ -1,16 +1,24 @@
+(require rackunit)
+
 (define (square x)
-  (* x x)
+  (* x x))
 
-(define (exponent b n)
-  (exp-iter b n 1))
+(define (fib n)
+  (define (fib-iter a b p q count)
+    (cond ((= count 0) b)
+          ((even? count)
+            (fib-iter a
+                      b
+                      (+ (square p) (square q))
+                      (+ (square q) (* 2 p q))
+                      (/ count 2)))
+           (else (fib-iter (+ (* b q) (* a q) (* a p))
+                           (+ (* b p) (* a q))
+                           p
+                           q
+                           (- count 1)))))
+  (fib-iter 1 0 0 1 n))
 
-(define (exp-iter b n a)
-  (cond ((= n 1) (* b a))
-        ((even? n) (exp-iter (square b)
-                             (/ n 2)
-                             a))
-        (else (exp-iter b
-                        (- n 1)
-                        (* a b)))))
-
-(exponent 3 10000)
+(check-equal? (fib 13) 233)
+(check-equal? (fib 4) 3)
+(check-equal? (fib 7) 13)
